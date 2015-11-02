@@ -13,6 +13,7 @@ vid = cv2.VideoCapture("dataset/short.avi")
 
 while(vid.isOpened()):
 	_, f = vid.read()
+	if f == None : break
 	blur = cv2.medianBlur(f,5)
 	hsv = cv2.cvtColor(f,cv2.COLOR_BGR2HSV)
 	red = getthresholdedimg(hsv)
@@ -32,7 +33,7 @@ while(vid.isOpened()):
 	for cnt in contours:
 	    x,y,w,h = cv2.boundingRect(cnt)
 	    cx,cy = x+w/2, y+h/2
-	    
+
 	    cv2.circle(f,(cx,cy),(w)/2,[255,0,0],2)
 	    cv2.circle(f,(cx,cy),2,[255,0,0],2)
 
