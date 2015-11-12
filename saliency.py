@@ -55,10 +55,17 @@ def backprojection_saliency(img):
 if __name__ == "__main__":
 	# name = sys.argv[1].strip(".jpg")
 
-	img = cv2.imread('dataset/ball.jpg', 1)
-	img = cv2.resize(img, (640/2, 480/2))
+	img = cv2.imread('dataset/ball2.jpg', 1)
+	# img = cv2.resize(img, (640, 480))
 	mask = backprojection_saliency(img)
 	segmentation = img*mask[:,:,np.newaxis]
+
+	gray = cv2.cvtColor(segmentation,cv2.COLOR_RGB2GRAY)
+
+
+	# Find contours
+	contours,hierarchy = cv2.findContours(gray,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+	cv2.drawContours(img, contours, -1, (255,0,0), 3)
 
 	cv2.imshow("original", img)
 	cv2.imshow("segmentation", segmentation)
