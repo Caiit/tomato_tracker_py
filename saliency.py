@@ -1,4 +1,5 @@
 import cv2, sys
+import cv2.cv as cv
 import numpy as np
 
 def backproject(source, target, levels = 2, scale = 1):
@@ -54,19 +55,26 @@ def backprojection_saliency(img):
 
 if __name__ == "__main__":
 	# name = sys.argv[1].strip(".jpg")
-
-	img = cv2.imread('dataset/ball2.jpg', 1)
+	vid = cv2.VideoCapture("dataset/ball_moving.mp4")
+	# img = cv2.imread('dataset/ball2.jpg', 1)
 	# img = cv2.resize(img, (640, 480))
-	mask = backprojection_saliency(img)
-	segmentation = img*mask[:,:,np.newaxis]
+	while(vid.isOpened()):
+		_, f = vid.read()
+		if f == None : break
+		mask = backprojection_saliency(f)
+		segmentation = f*mask[:,:,np.newaxis]
+		gray = cv2.cvtColor(segmentation,cv2.COLOR_RGB2GRAY)
 
-	gray = cv2.cvtColor(segmentation,cv2.COLOR_RGB2GRAY)
-
-
-	# Find contours
-	contours,hierarchy = cv2.findContours(gray,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
-	cv2.drawContours(img, contours, -1, (255,0,0), 3)
+		# Find contours
+		contours,hierarchy = cv2.findContours(gray,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+		cv2.drawContours(f, contours, -1, (255,0,0), 3)
+		cv2.imshow('vid', f)
+		cv2.imshow("segmentation", segmentation)
+		if cv2.waitKey(80) & 0xFF == ord('q'):
+			break
 
 	cv2.imshow("original", img)
 	cv2.imshow("segmentation", segmentation)
 	cv2.waitKey(-1)
+	vid.release()
+	cv2.destroyAllWindows()

@@ -3,7 +3,9 @@ import numpy as np
 
 # Get the threshold of the image
 def getthresholdedimg(hsv):
-	red = cv2.inRange(hsv,np.array((0,140, 70)),np.array((3,250,200)))
+	red = cv2.inRange(hsv,np.array((0,0, 200)),np.array((255,60,255)))
+	#white: hsv,np.array((0,0, 200)),np.array((255,60,255))
+	#red:   hsv,np.array((0,140, 70)),np.array((3,250,200))
 	return red
 
 # Read the image
@@ -11,7 +13,7 @@ def getthresholdedimg(hsv):
 
 
 # Read the video
-vid = cv2.VideoCapture("dataset/short.avi")
+vid = cv2.VideoCapture("dataset/ball_moving.mp4")
 
 while(vid.isOpened()):
 	_, f = vid.read()
@@ -39,7 +41,7 @@ while(vid.isOpened()):
 	    cv2.circle(f,(cx,cy),(w)/2,[255,0,0],2)
 	    cv2.circle(f,(cx,cy),2,[255,0,0],2)
 
-	
+
 	cv2.imshow('img', f)
 	if cv2.waitKey(80) & 0xFF == ord('q'):
 		break
