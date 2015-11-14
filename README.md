@@ -1,2 +1,3 @@
 # tomato_tracker_py
-Tracking a tomato with opencv in python
+- Color invariant object recognition with HoughCircles
+- Color detecting with hsv values
