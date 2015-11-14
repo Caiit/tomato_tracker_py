@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 # Read the video
-vid = cv2.VideoCapture("scoring.avi")
+vid = cv2.VideoCapture("football/scoring.avi")
 
 while(vid.isOpened()):
 	_, f = vid.read()
@@ -14,7 +14,7 @@ while(vid.isOpened()):
 
 	edges = cv2.Canny(im,60,180,apertureSize = 3,  L2gradient=True)
 
-	lines = cv2.HoughLinesP(edges,10,np.pi/2,100, minLineLength = 10, maxLineGap = 5)
+	lines = cv2.HoughLinesP(edges,10,np.pi/2,100, minLineLength = 70, maxLineGap = 10)
 	if lines != None: 
 		for x1,y1,x2,y2 in lines[0]:
 			cv2.line(f,(x1,y1),(x2,y2),(0,255,0),2)
