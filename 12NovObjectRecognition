@@ -1,3 +1,6 @@
 1. Saliency: G Ras gebruikt GVBS via matlab. Dit wil ik ook in Python :(
 2. pySaliencyMap is niet optimaal, returnt raar image-formaat
 3. Niet mogelijk om Hough-functions op de map te runnen. 
+4. http://docs.opencv.org/master/d3/dc0/group__imgproc__shape.html#ga17ed9f5d79ae97bd4c7cf18403e1689a&gsc.tab=0
+5. http://jacobcv.blogspot.nl/2015/04/simple-image-saliency-detection-from.html
+6. http://www.ais.uni-bonn.de/humanoidsoccer/ws10/papers/HSR10_01.pdf

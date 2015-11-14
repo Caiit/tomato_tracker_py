@@ -55,8 +55,8 @@ def backprojection_saliency(img):
 if __name__ == "__main__":
 	# name = sys.argv[1].strip(".jpg")
 
-	img = cv2.imread('dataset/ball2.jpg', 1)
-	# img = cv2.resize(img, (640, 480))
+	img = cv2.imread('dataset/ball3.jpg', 1)
+	img = cv2.resize(img, (640, 480))
 	mask = backprojection_saliency(img)
 	segmentation = img*mask[:,:,np.newaxis]
 
