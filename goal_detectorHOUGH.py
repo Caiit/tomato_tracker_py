@@ -15,11 +15,12 @@ while(vid.isOpened()):
 	edges = cv2.Canny(im,60,180,apertureSize = 3,  L2gradient=True)
 
 	lines = cv2.HoughLinesP(edges,10,np.pi/2,100, minLineLength = 40, maxLineGap = 10)
-	if lines != None: 
+	backtorgb = cv2.cvtColor(edges,cv2.COLOR_GRAY2RGB)
+	if lines != None:
 		for x1,y1,x2,y2 in lines[0]:
-			cv2.line(f,(x1,y1),(x2,y2),(0,255,0),2)
+			cv2.line(backtorgb,(x1,y1),(x2,y2),(0,255,0),2)
 
-	cv2.imshow('img', f)
+	cv2.imshow('img', backtorgb)
 	if cv2.waitKey(100) & 0xFF == ord('q'):
 		break
 
