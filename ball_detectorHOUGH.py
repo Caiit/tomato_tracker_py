@@ -1,9 +1,8 @@
 import cv2
-import cv2.cv as cv
 import numpy as np
 
 # Read the video
-vid = cv2.VideoCapture("football/scoring.avi")
+vid = cv2.VideoCapture("football/rolling_ball.avi")
 
 while(vid.isOpened()):
     _, f = vid.read()
@@ -12,22 +11,30 @@ while(vid.isOpened()):
     hsv = cv2.cvtColor(f,cv2.COLOR_BGR2HSV)
     s = hsv[:,1:]
     im = cv2.GaussianBlur(s, (13,13), 0, 0)
+
     edges = cv2.Canny(im,60,180,apertureSize = 3,  L2gradient=True)
+    torgb = cv2.cvtColor(edges, cv2.COLOR_GRAY2RGB)
 
     contours,hierarchy = cv2.findContours(edges,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(f, contours, -1, (255,0,0), 3)
 
-    # circles = cv2.HoughCircles(edges,cv.CV_HOUGH_GRADIENT,2,20,param1=50,param2=60,minRadius=0,maxRadius=30)
-    # backtorgb = cv2.cvtColor(edges,cv2.COLOR_GRAY2RGB)
-    # if circles != None:
-    #     circles = np.uint16(np.around(circles))
-    #     for i in circles[0,:]:
-    #         # draw the outer circle
-    #         cv2.circle(backtorgb,(i[0],i[1]),i[2],(0,255,0),2)
-    #         # draw the center of the circle
-    #         cv2.circle(backtorgb,(i[0],i[1]),2,(0,0,255),3)
+    params = cv2.SimpleBlobDetector_Params()
+    params.filterByCircularity = True
+    params.minCircularity = 0.1
 
-    cv2.imshow('img', f)
+    detector = cv2.SimpleBlobDetector(params)
+
+    # Detect blobs.
+    keypoints = detector.detect(f)
+
+    # Draw detected blobs as yellow circles.
+    # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
+    im_with_keypoints = cv2.drawKeypoints(f, keypoints, np.array([]), (0,255,255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+
+
+
+
+    cv2.imshow('detected circles',im_with_keypoints)
     if cv2.waitKey(100) & 0xFF == ord('q'):
     	break
 
