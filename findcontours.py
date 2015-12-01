@@ -1,26 +1,21 @@
 import cv2
 import numpy as np
 
-# Get the threshold of the image
-def getthresholdedimg(hsv):
-	red = cv2.inRange(hsv,np.array((0,140, 70)),np.array((3,250,200)))
-	#white: hsv,np.array((0,0, 200)),np.array((255,60,255))
-	#red:   hsv,np.array((0,140, 70)),np.array((3,250,200))
-	return red
-
 # Read the image
 # img=cv2.imread("dataset/tomato.jpg")
 
 
 # Read the video
 vid = cv2.VideoCapture("dataset/short.avi")
+fourcc = cv2.cv.CV_FOURCC(*'XVID')
+out = cv2.VideoWriter('findcontours.avi',fourcc, 10.0, (320,240))
 
 while(vid.isOpened()):
 	_, f = vid.read()
 	if f == None : break
 	blur = cv2.medianBlur(f,5)
 	hsv = cv2.cvtColor(f,cv2.COLOR_BGR2HSV)
-	red = getthresholdedimg(hsv)
+	red = red = cv2.inRange(hsv,np.array((0,140, 70)),np.array((3,250,200)))
 	erode = cv2.erode(red,None,iterations = 3)
 	dilate = cv2.dilate(erode,None,iterations = 10)
 
@@ -34,17 +29,19 @@ while(vid.isOpened()):
 	contours,hierarchy = cv2.findContours(dilate,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 	# Draw a circle around the object
 	for cnt in contours:
-	    x,y,w,h = cv2.boundingRect(cnt)
-	    cx,cy = x+w/2, y+h/2
+	    (x,y),radius = cv2.minEnclosingCircle(cnt)
+	    center = (int(x),int(y))
+	    radius = int(radius)
+	    if radius > 25:
+		    cv2.circle(f,center,radius,(0,255,0),2)
+		    cv2.circle(f,center,2,(0,0,255),2)
 
-	    cv2.circle(f,(cx,cy),(w)/2,[255,0,0],2)
-	    cv2.circle(f,(cx,cy),2,[255,0,0],2)
-
-
-	cv2.imshow('img', f)
-	if cv2.waitKey(80) & 0xFF == ord('q'):
+	cv2.imshow('findContours', f)
+	out.write(f)
+	if cv2.waitKey(120) & 0xFF == ord('q'):
 		break
 
-#cv2.waitKey(0)
 vid.release()
+out.release()
+cv2.waitKey(0)
 cv2.destroyAllWindows()

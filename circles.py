@@ -3,7 +3,7 @@ import cv2
 # import pySaliencyMap
 import numpy as np
 
-img = cv2.imread('dataset/ball.jpg')
+img = cv2.imread('dataset/short.avi')
 # img = img.astype(np.uint8)
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 ret,thresh = cv2.threshold(gray,127,255,0)

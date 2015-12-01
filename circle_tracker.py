@@ -2,7 +2,7 @@ import cv2, sys
 import cv2.cv as cv
 import numpy as np
 
-vid = cv2.VideoCapture("football/scoring.avi")
+vid = cv2.VideoCapture("dataset/short.avi")
 
 while(vid.isOpened()):
     _, f = vid.read()
@@ -14,14 +14,15 @@ while(vid.isOpened()):
 
     edges = cv2.Canny(f,60,180,apertureSize = 3,  L2gradient=True)
 
-    contours,hierarchy = cv2.findContours(f,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
-    cv2.drawContours(f, contours, -1, (255,0,0), 3)
+    contours,hierarchy = cv2.findContours(edges,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
+    # cv2.drawContours(f, contours, -1, (255,0,0), 3)
 
 
     detector = cv2.SimpleBlobDetector()
 
     # Detect blobs.
     keypoints = detector.detect(f)
+    print keypoints
 
     # Draw detected blobs as red circles.
     # cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS ensures the size of the circle corresponds to the size of blob
