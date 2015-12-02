@@ -53,7 +53,7 @@ while True:
 		# Find contours
 		contours,hierarchy = cv2.findContours(dilate,cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)
 		# Draw a circle around the object
-		print(contours)
+		# print(contours)
 		for cnt in contours:
 			(x,y),radius = cv2.minEnclosingCircle(cnt)
 			center = (int(x),int(y))
