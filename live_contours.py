@@ -20,10 +20,12 @@ width = 320
 height = 240
 image = np.zeros((height, width, 3), np.uint8)
 
-nameId = camProxy.subscribe("python_GVM", resolution, colorSpace, fps)
-print nameId
+# For a distance of 0.4 meter, the radius of the tomato is 26
+radiusToMeters = 26*0.4
 
+nameId = camProxy.subscribe("python_GVM", resolution, colorSpace, fps)
 print 'getting images in remote'
+
 while True:
 	nao_image = camProxy.getImageRemote(nameId)
 	if nao_image == None:
@@ -56,9 +58,12 @@ while True:
 			(x,y),radius = cv2.minEnclosingCircle(cnt)
 			center = (int(x),int(y))
 			radius = int(radius)
-			if radius > 25:
+			if radius > 20:
 				cv2.circle(image,center,radius,(0,255,0),2)
 				cv2.circle(image,center,2,(0,0,255),2)
+
+			distance = (radiusToMeters / radius)
+			print(distance)
 
 		cv2.imshow('findContours', image)
 		if cv2.waitKey(120) & 0xFF == ord('q'):
