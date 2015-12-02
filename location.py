@@ -3,6 +3,11 @@ import numpy as np
 
 # for a distance of 0.4 meter, the radius of the tomato is 26
 radiusToMeters = 26*0.4
+# the width of the real tomato is 0.05 meter, on a distance of 0.40 meter it is 46 pixels
+pixToMeters = 46*0.4
+pixToMeters = 0.05/46*0.4
+# the tomato lies always on a height of 0.35 meters
+z = 0.35
 
 # Read the image
 img=cv2.imread("dataset/40center.jpg")
@@ -23,7 +28,12 @@ for cnt in contours:
 	    cv2.circle(img,center,radius,(0,255,0),2)
 	    cv2.circle(img,center,2,(0,0,255),2)
 
-    distance = (radiusToMeters / radius)
+if x < 160:
+	y = pixToMeters*(160-x)
+else:
+	y = pixToMeters*(x-160)
+print y
+x = (radiusToMeters / radius)
 
 cv2.imshow('findContours', img)
 
