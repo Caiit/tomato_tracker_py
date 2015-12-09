@@ -3,7 +3,7 @@ import numpy as np
 from naoqi import ALProxy
 import vision_definitions
 
-IP = "192.168.0.101"
+IP = "192.168.1.66"
 PORT = 9559
 
 # Create proxy to nao
@@ -22,9 +22,8 @@ image = np.zeros((height, width, 3), np.uint8)
 
 # for a distance of 0.4 meter, the radius of the tomato is 26
 radiusToMeters = 26*0.4
-# the width of the real tomato is 0.05 meter, on a distance of 0.40 meter it is 46 pixels
-pixToMeters = 46*0.4
-pixToMeters = 0.05/46*0.4
+# the width of the real tomato is 0.05 meter, on a distance of 0.40 meter its radius is 26 pixels
+pixToMeters = 0.05/(26*2)
 # the tomato lies always on a height of 0.35 meters
 z = 0.35
 
@@ -68,11 +67,7 @@ while True:
 				cv2.circle(image,center,2,(0,0,255),2)
 
 			x_distance = (radiusToMeters / radius)
-			if x < 160:
-				y = pixToMeters*(160-x)
-			else:
-				y = pixToMeters*(x-160)
-
+			y = pixToMeters*(160-x)
 			x_distance = (radiusToMeters / radius)
 			print "X_distance:",x_distance
 			print "Y_offset:",y

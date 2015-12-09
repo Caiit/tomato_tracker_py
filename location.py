@@ -3,8 +3,8 @@ import numpy as np
 
 # for a distance of 0.4 meter, the radius of the tomato is 26
 radiusToMeters = 26*0.4
-# the width of the real tomato is 0.05 meter, on a distance of 0.40 meter it is 46 pixels
-pixToMeters = 0.05/46*0.4
+# the width of the real tomato is 0.05 meter, on a distance of 0.40 meter its radius is 26 pixels
+pixToMeters = 0.05/(26*2)
 # the tomato lies always on a height of 0.35 meters
 z_robot = 0.35
 
@@ -30,9 +30,11 @@ for cnt in contours:
 			y_robot = pixToMeters*(160-x)
 		else:
 			y_robot = pixToMeters*(x-160)
-		print y_robot
 		x_robot = (radiusToMeters / radius)
 
+
+print y_robot
+print x_robot	
 cv2.imshow('findContours', img)
 
 cv2.waitKey(0)
