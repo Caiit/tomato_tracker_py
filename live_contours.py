@@ -1,7 +1,9 @@
 import cv2
 import numpy as np
-from naoqi import ALProxy
 import vision_definitions
+import rosbag
+
+from naoqi import ALProxy
 
 IP = "192.168.1.66"
 PORT = 9559
@@ -14,6 +16,9 @@ camProxy = ALProxy("ALVideoDevice", IP, PORT)
 resolution = vision_definitions.kQVGA
 colorSpace = vision_definitions.kHSVColorSpace
 fps = 30
+
+# create rosbag
+bag = rosbag.Bag('tomato_guessr.bag', 'w')
 
 # create image
 width = 320
@@ -72,6 +77,8 @@ while True:
             x_distance = (radiusToMeters / radius)
             y = pixToMeters*(160-x)
             x_distance = (radiusToMeters / radius)
+            bag.write('x_distance', x_distance)
+            bag.write('y_offset', y)
             print "X_distance:", x_distance
             print "Y_offset:", y
 
