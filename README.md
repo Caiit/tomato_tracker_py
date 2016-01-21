@@ -8,3 +8,7 @@ We've explored multiple ways of detecting the red circle:
 
 Results are visible in results/
 [Check out our progress report!](https://honoursrobotbutler.wordpress.com/labbook/)
+
+
+Todo:
+accuracy on chessboard(xy pos)
