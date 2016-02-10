@@ -9,6 +9,4 @@ We've explored multiple ways of detecting the red circle:
 Results are visible in results/
 [Check out our progress report!](https://honoursrobotbutler.wordpress.com/labbook/)
 
-
-Todo:
-accuracy on chessboard(xy pos)
+Implemented code is available in the tomato_py folder. This should be run as a ROS-node
