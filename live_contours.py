@@ -5,7 +5,7 @@ import rosbag
 
 from naoqi import ALProxy
 
-IP = "192.168.1.66"
+IP = "192.168.1.36"
 PORT = 9559
 
 # Create proxy to nao

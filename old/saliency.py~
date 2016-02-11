@@ -57,7 +57,7 @@ if __name__ == "__main__":
 # 	# name = sys.argv[1].strip(".jpg")
 # <<<<<<< HEAD
 
-	img = cv2.imread('../dataset/tomato.jpg', 1)
+	img = cv2.imread('dataset/ball3.jpg', 1)
 	img = cv2.resize(img, (640, 480))
 	mask = backprojection_saliency(img)
 	segmentation = img*mask[:,:,np.newaxis]

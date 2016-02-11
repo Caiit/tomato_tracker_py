@@ -19,7 +19,7 @@ while(vid.isOpened()):
 	 
 	# Filter by Area.
 	params.filterByArea = True
-	params.minArea = 70
+	params.minArea = 100
 	 
 	# Filter by Circularity
 	params.filterByCircularity = True
